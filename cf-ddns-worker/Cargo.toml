@@ -18,6 +18,8 @@ crate-type = ["cdylib", "rlib"]
 worker = "0.4.2"
 worker-macros = "0.4.2"
 console_error_panic_hook = { version = "0.1.7" }
+serde = { version = "1.0.215", features = ["derive"] }
+cf-ddns = { version = "*", path = "../cf-ddns" }
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3.45"

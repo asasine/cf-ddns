@@ -1,7 +1,8 @@
 [workspace]
 members = [
-    "cf-ddns-worker",
+    "cf-ddns",
     "cf-ddns-client",
+    "cf-ddns-worker",
 ]
 
 resolver = "2"

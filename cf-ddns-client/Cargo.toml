@@ -4,5 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+cf-ddns = { version = "*", path = "../cf-ddns" }
 clap = { version = "4.5.21", features = ["derive"] }
-reqwest = { version = "0.12.9", features = ["blocking"] }
+reqwest = { version = "0.12.9", features = ["blocking", "json"] }
+serde = { version = "1.0.215", features = ["derive"] }

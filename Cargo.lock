@@ -138,18 +138,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "cf-ddns"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "cf-ddns-client"
 version = "0.1.0"
 dependencies = [
+ "cf-ddns",
  "clap",
  "reqwest",
+ "serde",
 ]
 
 [[package]]
 name = "cf-ddns-worker"
 version = "0.1.0"
 dependencies = [
+ "cf-ddns",
  "console_error_panic_hook",
+ "serde",
  "wasm-bindgen-test",
  "worker",
  "worker-macros",
