@@ -1,7 +1,13 @@
 [package]
 name = "cf-ddns-client"
-version = "0.1.0"
-edition = "2021"
+authors.workspace = true
+description.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+homepage.workspace = true
+repository.workspace = true
+license-file = "../LICENSE"
+version.workspace = true
 
 [dependencies]
 cf-ddns = { version = "*", path = "../cf-ddns" }

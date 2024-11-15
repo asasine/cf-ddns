@@ -6,3 +6,13 @@ members = [
 ]
 
 resolver = "2"
+
+[workspace.package]
+authors = ["Adam Sasine <adam.sasine@gmail.com>"]
+description = "Dynamic DNS using Cloudflare"
+edition = "2021"
+rust-version = "1.81"
+homepage = "https://github.com/asasine/cf-ddns"
+repository = "https://github.com/asasine/cf-ddns.git"
+license = "MIT"
+version = "0.1.0"
