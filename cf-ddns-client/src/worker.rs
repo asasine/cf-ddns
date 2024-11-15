@@ -50,7 +50,7 @@ pub fn get_ip(url: &str) -> Result<IpAddr, GetIpError> {
         .map_err(GetIpError::ResponseNotJson)?;
 
     if let Some(ip) = response.result {
-        Ok(IpAddr::V4(ip))
+        Ok(ip)
     } else {
         Err(GetIpError::UnsuccessfulResponse(response))
     }

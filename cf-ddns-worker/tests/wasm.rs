@@ -1,6 +1,6 @@
 //! Tests for functions that use wasm-bindgen imported functions.
 
-use std::net::Ipv4Addr;
+use std::net::IpAddr;
 
 use wasm_bindgen_test::*;
 
@@ -30,24 +30,37 @@ fn invalid_ip() {
 #[allow(dead_code)]
 #[wasm_bindgen_test]
 fn ipv4() {
-    let headers = Headers::from_iter([("CF-Connecting-IP", "127.0.0.1")]);
+    let ip = "127.0.0.1";
+    let headers = Headers::from_iter([("CF-Connecting-IP", ip)]);
     let resp = respond(&headers);
-    assert_eq!(resp, Response::from(Ipv4Addr::new(127, 0, 0, 1)));
+    assert_eq!(
+        resp,
+        Response::from(IpAddr::V4(ip.parse().expect("ip should be valid.")))
+    );
 }
 
 #[allow(dead_code)]
 #[wasm_bindgen_test]
 fn ipv6() {
-    let ipv6 = "::1";
-    let headers = Headers::from_iter([("CF-Connecting-IP", ipv6)]);
+    let ip = "::1";
+    let headers = Headers::from_iter([("CF-Connecting-IP", ip)]);
     let resp = respond(&headers);
-    assert_eq!(resp, Response::from(Error::V6NotSupported));
+    assert_eq!(
+        resp,
+        Response::from(IpAddr::V6(ip.parse().expect("ip should be valid.")))
+    );
 }
 
 #[allow(dead_code)]
 #[wasm_bindgen_test]
-fn ipv6_mapped() {
-    let headers = Headers::from_iter([("CF-Connecting-IP", "::ffff:7f00:1")]);
+fn ipv6_not_mapped() {
+    // This is an [IPv4-mapped IPv6 address](https://en.wikipedia.org/wiki/IPv6#IPv4-mapped_IPv6_addresses)
+    // The worker should not map it to an IPv4 address.
+    let ip = "::ffff:7f00:1";
+    let headers = Headers::from_iter([("CF-Connecting-IP", ip)]);
     let resp = respond(&headers);
-    assert_eq!(resp, Response::from(Ipv4Addr::new(127, 0, 0, 1)));
+    assert_eq!(
+        resp,
+        Response::from(IpAddr::V6(ip.parse().expect("ip should be valid.")))
+    );
 }

@@ -3,7 +3,7 @@
 
 use std::error;
 use std::fmt;
-use std::net::Ipv4Addr;
+use std::net::IpAddr;
 
 use serde::{Deserialize, Serialize};
 
@@ -15,9 +15,6 @@ pub enum Error {
 
     /// The IP address in the `CF-Connecting-IP` header is invalid. Contains the invalid IP address.
     InvalidIp(String),
-
-    /// The IP address in the `CF-Connecting-IP` header is an IPv6 address, which is not supported.
-    V6NotSupported,
 }
 
 impl fmt::Display for Error {
@@ -25,7 +22,6 @@ impl fmt::Display for Error {
         match self {
             Error::HeaderNotFound => write!(f, "CF-Connecting-IP header not found."),
             Error::InvalidIp(ip) => write!(f, "Invalid IP address: {}", ip),
-            Error::V6NotSupported => write!(f, "IPv6 addresses are not supported."),
         }
     }
 }
@@ -65,11 +61,11 @@ pub struct Response {
     pub errors: Vec<ResponseInfo<Error>>,
 
     /// The result of the request, if successful.
-    pub result: Option<Ipv4Addr>,
+    pub result: Option<IpAddr>,
 }
 
-impl From<Ipv4Addr> for Response {
-    fn from(ip: Ipv4Addr) -> Self {
+impl From<IpAddr> for Response {
+    fn from(ip: IpAddr) -> Self {
         Self {
             success: true,
             errors: vec![],
@@ -88,8 +84,8 @@ impl From<Error> for Response {
     }
 }
 
-impl From<Result<Ipv4Addr, Error>> for Response {
-    fn from(result: Result<Ipv4Addr, Error>) -> Self {
+impl From<Result<IpAddr, Error>> for Response {
+    fn from(result: Result<IpAddr, Error>) -> Self {
         match result {
             Ok(ip) => ip.into(),
             Err(err) => err.into(),

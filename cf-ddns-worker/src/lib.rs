@@ -11,11 +11,7 @@ pub fn respond(headers: &Headers) -> CfDdnsResponse {
         .expect("CF-Connecting-IP should be a valid header identifier.")
         .ok_or(Err(Error::HeaderNotFound))
         .and_then(|ip| ip.parse::<IpAddr>().map_err(|_| Err(Error::InvalidIp(ip))))
-        .map(|ip| ip.to_canonical()) // ::ffff:7f00:1 -> 127.0.0.1
-        .map_or_else(std::convert::identity, |ip| match ip {
-            IpAddr::V4(addr) => Ok(addr),
-            IpAddr::V6(_) => Err(Error::V6NotSupported),
-        })
+        .or_else(std::convert::identity)
         .into()
 }
 
