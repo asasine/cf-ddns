@@ -1,0 +1,6 @@
+[toolchain]
+# 1.81 is required to mitigate a Cloudflare Workers bug (and subsequent wasm-bindgen bug)
+# https://github.com/cloudflare/workers-rs/issues/658
+channel = "1.81.0"
+targets = ["wasm32-unknown-unknown"]
+profile = "minimal"
