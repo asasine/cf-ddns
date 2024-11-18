@@ -11,6 +11,8 @@ resolver = "2"
 authors = ["Adam Sasine <adam.sasine@gmail.com>"]
 description = "Dynamic DNS using Cloudflare"
 edition = "2021"
+# 1.81 is required to mitigate a Cloudflare Workers bug (and subsequent wasm-bindgen bug)
+# https://github.com/cloudflare/workers-rs/issues/658
 rust-version = "1.81"
 homepage = "https://github.com/asasine/cf-ddns"
 repository = "https://github.com/asasine/cf-ddns.git"

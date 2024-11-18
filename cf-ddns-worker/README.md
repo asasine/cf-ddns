@@ -9,12 +9,6 @@ Developing this worker uses the [Rust support for Cloudflare Workers](https://de
 npx wrangler dev
 ```
 
-If you fail to start the local server with an uncaught link error, try overridding the Rust version to `1.81` ([ref](https://github.com/cloudflare/workers-rs/issues/658)):
-
-```bash
-rustup override set 1.81
-```
-
 ### Test
 Testing is done using wasm-bindgen-test ([ref](https://rustwasm.github.io/wasm-bindgen/wasm-bindgen-test/usage.html)):
 
