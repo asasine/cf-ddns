@@ -17,3 +17,9 @@ serde = { version = "1.0.215", features = ["derive"] }
 
 [dev-dependencies]
 serde_json = "1.0.132"
+
+[package.metadata.deb]
+maintainer-scripts = "debian/"
+
+[package.metadata.deb.systemd-units]
+unit-name = "cf-ddns"

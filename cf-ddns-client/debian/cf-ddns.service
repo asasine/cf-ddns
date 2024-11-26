@@ -1,0 +1,8 @@
+[Unit]
+Description=Update Cloudflare DNS record
+
+[Service]
+ExecStart=/usr/bin/cf-ddns-client --zone-name "${ZONE_NAME}" --record-name "${RECORD_NAME}" --debug --token-file /etc/cf-ddns/token.txt
+
+[Install]
+WantedBy=multi-user.target
