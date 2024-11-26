@@ -1,4 +1,5 @@
 use std::process::ExitCode;
+use std::path::PathBuf;
 
 use clap::Parser;
 
@@ -16,8 +17,8 @@ struct Args {
     zone: ZoneArgs,
 
     /// The API token to authenticate with the Cloudflare API.
-    #[arg(long)]
-    token: String,
+    #[command(flatten)]
+    token: TokenArgs,
 
     /// The DNS record to update.
     #[command(flatten)]
@@ -26,6 +27,32 @@ struct Args {
     /// Include debug output.
     #[arg(long)]
     debug: bool,
+}
+
+#[derive(clap::Args)]
+#[group(required = true, multiple = false)]
+struct TokenArgs {
+    /// The API token to authenticate with the Cloudflare API.
+    #[arg(long)]
+    token: Option<String>,
+
+    /// The path to a file containing the API token to authenticate with the Cloudflare API.
+    #[arg(long)]
+    token_file: Option<PathBuf>,
+}
+
+impl TokenArgs {
+    fn token(&self) -> String {
+        let token = match (&self.token, &self.token_file) {
+            (Some(token), None) => token.to_string(),
+            (None, Some(token_file)) => {
+                std::fs::read_to_string(token_file).expect("Could not read token file")
+            }
+            _ => unreachable!("Clap should ensure either token or token_file is provided."),
+        };
+
+        token.trim().to_string()
+    }
 }
 
 #[derive(clap::Args)]
@@ -68,7 +95,7 @@ fn main() -> ExitCode {
         eprintln!("IP: {}", ip);
     }
 
-    let client = Cloudflare::try_new(&args.token).unwrap();
+    let client = Cloudflare::try_new(&args.token.token()).unwrap();
     let zone_id = match args.zone.zone_id {
         Some(zone_id) => zone_id,
         None => match client.get_zone_id(&args.zone.zone_name) {
