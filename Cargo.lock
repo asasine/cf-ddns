@@ -139,14 +139,14 @@ dependencies = [
 
 [[package]]
 name = "cf-ddns"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "serde",
 ]
 
 [[package]]
 name = "cf-ddns-client"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "cf-ddns",
  "clap",
@@ -157,7 +157,7 @@ dependencies = [
 
 [[package]]
 name = "cf-ddns-worker"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "cf-ddns",
  "console_error_panic_hook",

@@ -1,0 +1,11 @@
+[Unit]
+Description=Periodically update Cloudflare DNS record
+After=network-online.target
+
+[Timer]
+OnCalendar=*-*-* *:0/30:00
+RandomizedDelaySec=600
+Persistent=true
+
+[Install]
+WantedBy=multi-user.target
